@@ -28,10 +28,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Accelerate();
-        Turn();
+        if (transform.position.y < 0.3 && transform.position.y > -0.1) {
+            Accelerate();
+            Turn();
+        }
         RotateWheels();
         Steer();
+        Recover();
     }
 
     // Accelerates, decelerates, and reverses the car
@@ -107,6 +110,13 @@ public class PlayerController : MonoBehaviour
         } else {
             fL.transform.localEulerAngles = new Vector3(0, 0, 0);
             fR.transform.localEulerAngles = new Vector3(0, 0, 0);
+        }
+    }
+
+    void Recover() {
+        if (Input.GetKey(KeyCode.R)) {
+            transform.position = new Vector3(0, 1.25f, 40);
+            speed = 0;
         }
     }
 }

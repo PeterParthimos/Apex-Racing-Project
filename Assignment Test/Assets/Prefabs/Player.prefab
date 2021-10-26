@@ -197,7 +197,7 @@ MonoBehaviour:
   rL: {fileID: 1405212405047245076}
   fR: {fileID: 1657823472558536871}
   rR: {fileID: 4855258539934044521}
-  maxFSpeed: 300
+  maxFSpeed: 250
   maxRSpeed: 50
 --- !u!1 &971808756611708631
 GameObject:
