@@ -80,12 +80,12 @@ public class PlayerController : MonoBehaviour
             if (speed != 0 && speed <= maxFSpeed / 2)
                 transform.Rotate(new Vector3(0, 1f, 0), Space.Self);
             else if (speed > maxFSpeed / 2)
-                transform.Rotate(new Vector3(0, 0.5f, 0), Space.Self);
+                transform.Rotate(new Vector3(0, 0.75f, 0), Space.Self);
         } else if (Input.GetKey(KeyCode.A)) {
             if (speed != 0 && speed <= maxFSpeed / 2)
                 transform.Rotate(new Vector3(0, -1f, 0), Space.Self);
             else if (speed > maxFSpeed / 2)
-                transform.Rotate(new Vector3(0, -0.5f, 0), Space.Self);
+                transform.Rotate(new Vector3(0, -0.75f, 0), Space.Self);
         }
     }
 
