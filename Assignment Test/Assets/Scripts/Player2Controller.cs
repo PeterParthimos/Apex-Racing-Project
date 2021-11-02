@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class Player2Controller : MonoBehaviour {
     public GameObject fL;
     public GameObject rL;
     public GameObject fR;
@@ -18,37 +17,15 @@ public class PlayerController : MonoBehaviour
 
     private float speed = 0.0f;
 
-    private KeyCode forward;
-    private KeyCode back;
-    private KeyCode left;
-    private KeyCode right;
-    private KeyCode recover;
-
     // Start is called before the first frame update
-    void Start()
-    {
-        if (tag == "Player1") {
-            forward = KeyCode.W;
-            back = KeyCode.S;
-            left = KeyCode.A;
-            right = KeyCode.D;
-            recover = KeyCode.R;
-        } else if (tag == "Player2") {
-            forward = KeyCode.UpArrow;
-            back = KeyCode.DownArrow;
-            left = KeyCode.LeftArrow;
-            right = KeyCode.RightArrow;
-            recover = KeyCode.RightControl;
-        }
-
+    void Start() {
         sound = GetComponent<AudioSource>();
         sound.pitch = minPitch;
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (transform.position.y < 0.3 && transform.position.y > -0.3) {
+    void Update() {
+        if (transform.position.y < 0.3 && transform.position.y > -0.1) {
             Accelerate();
             Turn();
         }
@@ -61,30 +38,30 @@ public class PlayerController : MonoBehaviour
     void Accelerate() {
         transform.Translate(Vector3.forward * Time.deltaTime * (speed / 5));
 
-        if (Input.GetKey(forward)) {
+        if (Input.GetKey(KeyCode.UpArrow)) {
             if (speed < maxFSpeed) {
                 speed++;
-                if (sound.pitch < maxPitch) {
-                    sound.pitch += 0.006f;
-                } else {
-                    sound.pitch = maxPitch;
-                }
+                //if (sound.pitch < maxPitch) {
+                //    sound.pitch += 0.006f;
+                //} else {
+                //    sound.pitch = maxPitch;
+                //}
             } else {
                 speed = maxFSpeed;
-                sound.pitch = maxPitch;
+                //sound.pitch = maxPitch;
             }
         } else {
             if (speed > 0) {
                 speed -= 0.5f;
-                if (sound.pitch > minPitch) {
-                    sound.pitch -= 0.0033f;
-                } else {
-                    sound.pitch = minPitch;
-                }
+                //if (sound.pitch > minPitch) {
+                //    sound.pitch -= 0.0033f;
+                //} else {
+                //    sound.pitch = minPitch;
+                //}
             }
         }
 
-        if (Input.GetKey(back)) {
+        if (Input.GetKey(KeyCode.DownArrow)) {
             if (speed > -maxRSpeed) {
                 speed--;
             } else {
@@ -99,12 +76,12 @@ public class PlayerController : MonoBehaviour
 
     // Turn the car. Can't turn when stopped
     void Turn() {
-        if (Input.GetKey(right)) {
+        if (Input.GetKey(KeyCode.D)) {
             if (speed != 0 && speed <= maxFSpeed / 2)
                 transform.Rotate(new Vector3(0, 1f, 0), Space.Self);
             else if (speed > maxFSpeed / 2)
                 transform.Rotate(new Vector3(0, 0.75f, 0), Space.Self);
-        } else if (Input.GetKey(left)) {
+        } else if (Input.GetKey(KeyCode.A)) {
             if (speed != 0 && speed <= maxFSpeed / 2)
                 transform.Rotate(new Vector3(0, -1f, 0), Space.Self);
             else if (speed > maxFSpeed / 2)
@@ -121,10 +98,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void Steer() {
-        if (Input.GetKey(right)) {
+        if (Input.GetKey(KeyCode.D)) {
             fL.transform.localEulerAngles = new Vector3(0, 30f, 0);
             fR.transform.localEulerAngles = new Vector3(0, 30f, 0);
-        } else if (Input.GetKey(left)) {
+        } else if (Input.GetKey(KeyCode.A)) {
             fL.transform.localEulerAngles = new Vector3(0, -30f, 0);
             fR.transform.localEulerAngles = new Vector3(0, -30f, 0);
         } else {
@@ -134,7 +111,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void Recover() {
-        if (Input.GetKey(recover)) {
+        if (Input.GetKey(KeyCode.R)) {
             transform.position = new Vector3(0, 1.25f, 40);
             transform.rotation = new Quaternion(0, 0, 0, 0);
             speed = 0;
