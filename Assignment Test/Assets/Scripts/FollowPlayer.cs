@@ -15,6 +15,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        //Gets player location and sets camera offset
         float newX = (player.transform.position.x + 20);
         float newY = (player.transform.position.y + 30);
         float newZ = (player.transform.position.z);

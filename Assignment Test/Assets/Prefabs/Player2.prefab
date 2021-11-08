@@ -257,9 +257,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 75fa27e467267c74f91f1f6f4e74ff88, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 30ab19edabbfdea499f3db426001e120, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 0.7
   Loop: 1
   Mute: 0
@@ -359,6 +359,7 @@ MonoBehaviour:
   rL: {fileID: 6191070126839041798}
   fR: {fileID: 1153714992364059152}
   rR: {fileID: 7517840242353605733}
+  endScreen: {fileID: 0}
   maxFSpeed: 250
   maxRSpeed: 50
 --- !u!1 &5489201148527348796
@@ -568,7 +569,7 @@ GameObject:
   - component: {fileID: 3875765977243264096}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -649,5 +650,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.002158, y: 1.3031229, z: 4.569528}
-  m_Center: {x: 0, y: 0.12973094, z: 0.1133275}
+  m_Size: {x: 2.002158, y: 1.4516802, z: 4.569528}
+  m_Center: {x: 0, y: 0.055452347, z: 0.1133275}

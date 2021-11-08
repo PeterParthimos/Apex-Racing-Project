@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public GameObject fR;
     public GameObject rR;
 
+    public Canvas endScreen;
+
     AudioSource sound;
     float minPitch = 0.7f;
     float maxPitch = 1.3f;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Detects if you are Player 1 or 2 and changes key bindings
         if (tag == "Player1") {
             forward = KeyCode.W;
             back = KeyCode.S;
@@ -34,13 +37,14 @@ public class PlayerController : MonoBehaviour
             right = KeyCode.D;
             recover = KeyCode.R;
         } else if (tag == "Player2") {
-            forward = KeyCode.UpArrow;
-            back = KeyCode.DownArrow;
-            left = KeyCode.LeftArrow;
-            right = KeyCode.RightArrow;
-            recover = KeyCode.RightControl;
+            forward = KeyCode.I;
+            back = KeyCode.K;
+            left = KeyCode.J;
+            right = KeyCode.L;
+            recover = KeyCode.P;
         }
 
+        //Gets the component for the audio
         sound = GetComponent<AudioSource>();
         sound.pitch = minPitch;
     }
@@ -48,23 +52,30 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < 0.3 && transform.position.y > -0.3) {
-            Accelerate();
-            Turn();
+        //Checks if the end screen is active, if not it lets you play
+        if (endScreen.enabled == true) {
+            EndGame();
+        } else {
+            if (transform.position.y < 0.3 && transform.position.y > -0.3) {
+                Accelerate();
+                Turn();
+            }
+            RotateWheels();
+            Steer();
+            Recover();
         }
-        RotateWheels();
-        Steer();
-        Recover();
     }
 
     // Accelerates, decelerates, and reverses the car
     void Accelerate() {
+        //Always moving forward based on speed
         transform.Translate(Vector3.forward * Time.deltaTime * (speed / 5));
 
+        //Increases speed if pressing W or I, slowly reduces speed if not
         if (Input.GetKey(forward)) {
             if (speed < maxFSpeed) {
                 speed++;
-                if (sound.pitch < maxPitch) {
+                if (sound.pitch < maxPitch) { //Also modulates the sound of the engines
                     sound.pitch += 0.006f;
                 } else {
                     sound.pitch = maxPitch;
@@ -84,6 +95,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //If pressing S or K, it will reduce speed and eventually go in reverse
         if (Input.GetKey(back)) {
             if (speed > -maxRSpeed) {
                 speed--;
@@ -98,6 +110,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Turn the car. Can't turn when stopped
+    // Chenges rate of turning based on speed: higher speed = slower turn
     void Turn() {
         if (Input.GetKey(right)) {
             if (speed != 0 && speed <= maxFSpeed / 2)
@@ -120,6 +133,7 @@ public class PlayerController : MonoBehaviour
         rR.transform.Rotate(new Vector3((speed / 12), 0, 0));
     }
 
+    // Simple enough, just rotates the wheels when turning
     void Steer() {
         if (Input.GetKey(right)) {
             fL.transform.localEulerAngles = new Vector3(0, 30f, 0);
@@ -133,11 +147,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Will respawn the car at the start of the lap if you get stuck
     void Recover() {
         if (Input.GetKey(recover)) {
-            transform.position = new Vector3(0, 1.25f, 40);
+            transform.position = new Vector3(0, 0.25f, 60);
             transform.rotation = new Quaternion(0, 0, 0, 0);
             speed = 0;
+        }
+    }
+
+    //Puts game into "slowmo" when the game is ended
+    void EndGame() {
+        transform.Translate(Vector3.forward * Time.deltaTime * (speed / 15));
+        if (speed > 0) {
+            speed -= 0.5f;
         }
     }
 }
